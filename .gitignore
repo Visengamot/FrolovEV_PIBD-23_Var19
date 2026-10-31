@@ -3,6 +3,23 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# Compiled artifacts must never be committed (laboratory requirement)
+*.exe
+*.dll
+*.bin
+
+# Diagram and supplementary materials are delivered separately
+*.vpp
+*.vpp.bak*
+README.md
+docs/
+Diagram/
+Materials/
+
+# Local UI verification artifacts
+ui-smoke-test.txt
+ui-inventory.png
+
 # User-specific files
 *.rsuser
 *.suo
