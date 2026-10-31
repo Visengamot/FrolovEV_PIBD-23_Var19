@@ -1,5 +1,7 @@
-using System.Globalization;
 using Autofac;
+using ShoeStore.WinForms.Configuration;
+using ShoeStore.WinForms.Forms;
+using System.Globalization;
 
 namespace ShoeStore.WinForms;
 

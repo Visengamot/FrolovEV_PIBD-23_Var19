@@ -1,5 +1,6 @@
+using ShoeStore.Core.Enums;
 using ShoeStore.Core.Models;
-using ShoeStore.Core.Repositories;
+using ShoeStore.Core.Repositories.Interfaces;
 
 namespace ShoeStore.Core.Services;
 

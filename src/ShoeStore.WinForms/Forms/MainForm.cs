@@ -1,6 +1,7 @@
 using Autofac;
+using ShoeStore.WinForms.Helpers;
 
-namespace ShoeStore.WinForms;
+namespace ShoeStore.WinForms.Forms;
 
 public sealed class MainForm : Form
 {

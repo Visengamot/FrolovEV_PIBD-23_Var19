@@ -1,8 +1,11 @@
 using Autofac;
-using ShoeStore.Core.Repositories;
+using ShoeStore.Core.Repositories.InMemory;
+using ShoeStore.Core.Repositories.Interfaces;
 using ShoeStore.Core.Services;
+using ShoeStore.Core.Storage;
+using ShoeStore.WinForms.Forms;
 
-namespace ShoeStore.WinForms;
+namespace ShoeStore.WinForms.Configuration;
 
 public static class DependencyInjection
 {

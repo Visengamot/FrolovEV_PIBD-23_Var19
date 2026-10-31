@@ -1,10 +1,11 @@
-using System.Globalization;
+using ShoeStore.Core.Enums;
 using ShoeStore.Core.Models;
-using ShoeStore.Core.Repositories;
+using ShoeStore.Core.Repositories.Interfaces;
+using ShoeStore.WinForms.Helpers;
+using System.Globalization;
 
-namespace ShoeStore.WinForms;
+namespace ShoeStore.WinForms.Forms;
 
-/// <summary>Only creates operations. Saved operations have no editing UI.</summary>
 public sealed class MovementEditorForm : Form
 {
     private readonly IStockMovementRepository _movements;
