@@ -7,7 +7,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ShoeStore.Core\ShoeStore.Core.csproj" />
     <PackageReference Include="Autofac" Version="8.1.1" />
   </ItemGroup>
 </Project>

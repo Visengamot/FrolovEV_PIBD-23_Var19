@@ -1,5 +1,5 @@
 using Autofac;
-using ShoeStore.WinForms.Configuration;
+using ShoeStore.WinForms;
 using ShoeStore.WinForms.Forms;
 using System.Globalization;
 

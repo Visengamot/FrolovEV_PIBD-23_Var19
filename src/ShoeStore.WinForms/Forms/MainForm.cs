@@ -1,5 +1,5 @@
 using Autofac;
-using ShoeStore.WinForms.Helpers;
+using ShoeStore.WinForms.Forms;
 
 namespace ShoeStore.WinForms.Forms;
 
