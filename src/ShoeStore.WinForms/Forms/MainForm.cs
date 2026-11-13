@@ -24,7 +24,7 @@ public sealed class MainForm : Form
         var reports = new ToolStripMenuItem("Отчеты") { Name = "reportsMenuItem" };
         menu.Items.AddRange([catalogs, operations, reports]);
         var status = new StatusStrip { Name = "mainStatusStrip" };
-        status.Items.Add(new ToolStripStatusLabel("Учёт обуви • Данные хранятся в памяти до закрытия программы") { Spring = true, TextAlign = ContentAlignment.MiddleLeft });
+        status.Items.Add(new ToolStripStatusLabel("Учёт обуви • PostgreSQL — данные сохраняются в базе") { Spring = true, TextAlign = ContentAlignment.MiddleLeft });
         Controls.Add(menu); Controls.Add(status); MainMenuStrip = menu;
     }
 

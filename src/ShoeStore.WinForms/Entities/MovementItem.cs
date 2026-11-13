@@ -1,17 +1,28 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using ShoeStore.WinForms.Entities;
 
 namespace ShoeStore.WinForms.Entities;
 
 public sealed class MovementItem
 {
+    [Key]
     public Guid Id { get; private set; }
     public Guid MovementId { get; private set; }
     public Guid ShoeId { get; private set; }
     public Guid ShoeSizeId { get; private set; }
     public int Quantity { get; private set; }
+    [Column(TypeName = "numeric(18,2)")]
     public decimal UnitPrice { get; private set; }
+    [ForeignKey(nameof(MovementId))]
+    public StockMovement Movement { get; private set; } = null!;
+    [ForeignKey(nameof(ShoeId))]
+    public Shoe Shoe { get; private set; } = null!;
+    [ForeignKey(nameof(ShoeSizeId))]
+    public ShoeSize ShoeSize { get; private set; } = null!;
+    [NotMapped]
     public decimal Total => Quantity * UnitPrice;
-    private MovementItem() { }
+    public MovementItem() { }
     public static MovementItem Create(Guid id, Guid movementId, Guid shoeId, Guid shoeSizeId, int quantity, decimal unitPrice)
     {
         if (quantity <= 0) throw new ArgumentOutOfRangeException(nameof(quantity), "Количество пар должно быть положительным.");
