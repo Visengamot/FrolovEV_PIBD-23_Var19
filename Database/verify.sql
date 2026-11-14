@@ -1,5 +1,4 @@
--- PostgreSQL: 127.0.0.1:55432, shoestore_lab2, shoestore_app.
--- Local password is in ignored appsettings.Local.json.
+
 SELECT current_database(), current_user, inet_server_addr(), inet_server_port();
 SELECT * FROM "__EFMigrationsHistory" ORDER BY "MigrationId";
 SELECT * FROM "Manufacturers" ORDER BY "Name";
