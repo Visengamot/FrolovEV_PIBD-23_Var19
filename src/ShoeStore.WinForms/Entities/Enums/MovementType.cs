@@ -1,7 +1,7 @@
-﻿namespace ShoeStore.WinForms.Entities.Enums;
+namespace ShoeStore.WinForms.Entities.Enums;
 
 public enum MovementType
 {
-    Receipt,
-    Sale
+    Receipt = 0,
+    Sale = 1
 }
