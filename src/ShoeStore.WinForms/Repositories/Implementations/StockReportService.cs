@@ -1,4 +1,4 @@
-using ShoeStore.WinForms.Entities.Enums;
+﻿using ShoeStore.WinForms.Entities.Enums;
 using ShoeStore.WinForms.Entities;
 using ShoeStore.WinForms.Repositories;
 
@@ -11,7 +11,12 @@ public sealed class StockReportService
     private readonly IShoeSizeRepository _sizes;
     private readonly IStockMovementRepository _movements;
 
-    public StockReportService(IManufacturerRepository manufacturers, IShoeRepository shoes, IShoeSizeRepository sizes, IStockMovementRepository movements)
+    public StockReportService(
+        IManufacturerRepository manufacturers,
+        IShoeRepository shoes,
+        IShoeSizeRepository sizes,
+        IStockMovementRepository movements
+    )
     {
         _manufacturers = manufacturers ?? throw new ArgumentNullException(nameof(manufacturers));
         _shoes = shoes ?? throw new ArgumentNullException(nameof(shoes));
@@ -26,16 +31,34 @@ public sealed class StockReportService
         var shoes = _shoes.GetAll().ToDictionary(x => x.Id);
         var sizes = _sizes.GetAll().ToDictionary(x => x.Id);
         var manufacturers = _manufacturers.GetAll().ToDictionary(x => x.Id);
-        var entries = _movements.GetAll().Where(x => x.Date <= date)
-            .SelectMany(m => m.Items.Select(item => new { Movement = m, Item = item }));
+        var entries = _movements.GetAll()
+            .Where(x => x.Date <= date)
+            .SelectMany(
+            m => m.Items.Select(item => new
+            {
+                Movement = m,
+                Item = item
+            })
+        );
         return entries.GroupBy(x => (x.Item.ShoeId, x.Item.ShoeSizeId)).Select(group =>
         {
             var shoe = shoes[group.Key.ShoeId];
-            var sales = group.Where(x => x.Movement.Type == MovementType.Sale && x.Movement.Date >= monthStart).ToList();
-            return new StockRow(shoe.Id, shoe.Article, shoe.Name, manufacturers[shoe.ManufacturerId].Name,
-                group.Key.ShoeSizeId, sizes[group.Key.ShoeSizeId].Value,
-                group.Sum(x => x.Item.Quantity * (x.Movement.Type == MovementType.Receipt ? 1 : -1)),
-                sales.Sum(x => x.Item.Quantity), sales.Sum(x => x.Item.Total));
+            var sales = group.Where(x => x.Movement.Type == MovementType.Sale
+                && x.Movement.Date >= monthStart)
+                .ToList();
+            return new StockRow(
+                shoe.Id,
+                shoe.Article,
+                shoe.Name,
+                manufacturers[shoe.ManufacturerId].Name,
+                group.Key.ShoeSizeId,
+                sizes[group.Key.ShoeSizeId].Value,
+                group.Sum(x => x.Item.Quantity * (x.Movement.Type == MovementType.Receipt
+                ? 1
+                : -1)),
+                sales.Sum(x => x.Item.Quantity),
+                sales.Sum(x => x.Item.Total)
+            );
         }).OrderBy(x => x.Article).ThenBy(x => x.Size).ToList();
     }
 }

@@ -1,4 +1,4 @@
-using ShoeStore.WinForms.Entities;
+﻿using ShoeStore.WinForms.Entities;
 using ShoeStore.WinForms.Repositories;
 
 namespace ShoeStore.WinForms.Forms;
@@ -14,8 +14,7 @@ public partial class ShoeSizeEditorForm : Form
         InitializeComponent();
     }
 
-    public ShoeSizeEditorForm(IShoeSizeRepository repository, ShoeSize? size = null)
-        : this()
+    public ShoeSizeEditorForm(IShoeSizeRepository repository, ShoeSize? size = null) : this()
     {
         ArgumentNullException.ThrowIfNull(repository);
         _repository = repository;
@@ -31,7 +30,10 @@ public partial class ShoeSizeEditorForm : Form
         Ui.Run(this, () =>
         {
             var item = ShoeSize.Create(_id, sizeNumericUpDown.Value);
-            if (_editing) _repository!.Update(item); else _repository!.Add(item);
+            if (_editing)
+                _repository!.Update(item);
+            else
+                _repository!.Add(item);
             DialogResult = DialogResult.OK;
             Close();
         });

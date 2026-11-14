@@ -1,4 +1,4 @@
-using ShoeStore.WinForms.Repositories;
+﻿using ShoeStore.WinForms.Repositories;
 
 namespace ShoeStore.WinForms.Forms;
 
@@ -17,12 +17,23 @@ public partial class ShoeSizesForm : Form
         AttachRuntimeEvents();
     }
 
-    private void Reload() => ItemsGrid.DataSource = _repository.GetAll().OrderBy(x => x.Value).ToList();
-    private void AddItem() => EditWith(new ShoeSizeEditorForm(_repository));
-    private void EditItem() => EditWith(new ShoeSizeEditorForm(_repository,
-        _repository.GetById(SelectedId()) ?? throw new InvalidOperationException("Запись не найдена.")));
-    private void DeleteItem(Guid id) => _repository.Delete(id);
+    private void Reload() =>
+        ItemsGrid.DataSource = _repository.GetAll().OrderBy(x => x.Value).ToList();
 
+    private void AddItem() =>
+        EditWith(new ShoeSizeEditorForm(_repository));
+
+    private void EditItem() =>
+        EditWith(
+        new ShoeSizeEditorForm(
+        _repository,
+        _repository.GetById(SelectedId())
+        ?? throw new InvalidOperationException("Запись не найдена.")
+    )
+    );
+
+    private void DeleteItem(Guid id) =>
+        _repository.Delete(id);
     // Only dependency-injected instances subscribe to runtime data operations.
     private void AttachRuntimeEvents()
     {
@@ -34,20 +45,31 @@ public partial class ShoeSizesForm : Form
         ItemsGrid.CellDoubleClick += ItemsGridCellDoubleClick;
     }
 
-    private void CatalogShown(object? sender, EventArgs e) => Ui.Run(this, Reload);
-    private void AddButtonClick(object? sender, EventArgs e) => Ui.Run(this, AddItem);
-    private void EditButtonClick(object? sender, EventArgs e) => Ui.Run(this, EditItem);
-    private void DeleteButtonClick(object? sender, EventArgs e) => Ui.Run(this, DeleteSelected);
-    private void RefreshButtonClick(object? sender, EventArgs e) => Ui.Run(this, Reload);
+    private void CatalogShown(object? sender, EventArgs e) =>
+        Ui.Run(this, Reload);
+
+    private void AddButtonClick(object? sender, EventArgs e) =>
+        Ui.Run(this, AddItem);
+
+    private void EditButtonClick(object? sender, EventArgs e) =>
+        Ui.Run(this, EditItem);
+
+    private void DeleteButtonClick(object? sender, EventArgs e) =>
+        Ui.Run(this, DeleteSelected);
+
+    private void RefreshButtonClick(object? sender, EventArgs e) =>
+        Ui.Run(this, Reload);
 
     private void ItemsGridCellDoubleClick(object? sender, DataGridViewCellEventArgs e)
     {
-        if (e.RowIndex >= 0) Ui.Run(this, EditItem);
+        if (e.RowIndex >= 0)
+            Ui.Run(this, EditItem);
     }
 
     private Guid SelectedId()
     {
-        if (ItemsGrid.CurrentRow?.Cells["IdColumn"].Value is Guid id) return id;
+        if (ItemsGrid.CurrentRow?.Cells["IdColumn"].Value is Guid id)
+            return id;
         throw new InvalidOperationException("Выберите запись в таблице.");
     }
 
@@ -55,15 +77,22 @@ public partial class ShoeSizesForm : Form
     {
         using (editor)
         {
-            if (editor.ShowDialog(this) == DialogResult.OK) Reload();
+            if (editor.ShowDialog(this) == DialogResult.OK)
+                Reload();
         }
     }
 
     private void DeleteSelected()
     {
         var id = SelectedId();
-        if (MessageBox.Show(this, "Удалить выбранную запись?", "Подтверждение удаления",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.Yes)
+        if (MessageBox.Show(
+            this,
+            "Удалить выбранную запись?",
+            "Подтверждение удаления",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question,
+            MessageBoxDefaultButton.Button2
+        ) != DialogResult.Yes)
             return;
         DeleteItem(id);
         Reload();

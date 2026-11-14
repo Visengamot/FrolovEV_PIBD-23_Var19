@@ -1,5 +1,4 @@
-#nullable disable
-
+﻿#nullable disable
 namespace ShoeStore.WinForms.Forms;
 
 partial class ShoeSizeEditorForm
@@ -12,7 +11,8 @@ partial class ShoeSizeEditorForm
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing && components != null) components.Dispose();
+        if (disposing && components != null)
+            components.Dispose();
         base.Dispose(disposing);
     }
 

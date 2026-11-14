@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using ShoeStore.WinForms.Data;
@@ -19,12 +19,18 @@ internal static class Program
         Application.ThreadException += (_, e) =>
         {
             Log.Error(e.Exception, "Ошибка формы");
-            MessageBox.Show(e.Exception.GetBaseException().Message, "Ошибка приложения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(
+                e.Exception.GetBaseException().Message,
+                "Ошибка приложения",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
         };
         try
         {
             Directory.SetCurrentDirectory(AppContext.BaseDirectory);
-            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(DataContext.LoadConfiguration()).CreateLogger();
+            Log.Logger = new LoggerConfiguration().ReadFrom.Configuration(DataContext.LoadConfiguration())
+                .CreateLogger();
             using var container = DependencyInjection.CreateContainer(builder =>
             {
                 builder.RegisterType<DataContext>().InstancePerLifetimeScope();
@@ -34,14 +40,19 @@ internal static class Program
             {
                 scope.Resolve<DataContext>().Database.Migrate();
             }
+
             Log.Information("Приложение запущено, миграции проверены");
             Application.Run(container.Resolve<MainForm>());
         }
         catch (Exception exception)
         {
             Log.Fatal(exception, "Ошибка запуска");
-            MessageBox.Show("Не удалось запустить приложение. Проверьте запуск PostgreSQL и локальные настройки подключения.\n\n" + exception.GetBaseException().Message,
-                "Ошибка запуска", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(
+                "Не удалось запустить приложение. Проверьте запуск PostgreSQL и локальные настройки подключения.\n\n" + exception.GetBaseException().Message,
+                "Ошибка запуска",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
         }
         finally
         {

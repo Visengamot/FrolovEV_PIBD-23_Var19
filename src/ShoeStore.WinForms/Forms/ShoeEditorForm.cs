@@ -1,4 +1,4 @@
-using ShoeStore.WinForms.Entities.Enums;
+﻿using ShoeStore.WinForms.Entities.Enums;
 using ShoeStore.WinForms.Entities;
 using ShoeStore.WinForms.Repositories;
 
@@ -16,8 +16,7 @@ public partial class ShoeEditorForm : Form
         InitializeComponent();
     }
 
-    public ShoeEditorForm(IShoeRepository repository, IManufacturerRepository manufacturers, Shoe? shoe = null)
-        : this()
+    public ShoeEditorForm(IShoeRepository repository, IManufacturerRepository manufacturers, Shoe? shoe = null) : this()
     {
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(manufacturers);
@@ -29,10 +28,19 @@ public partial class ShoeEditorForm : Form
         shoeNameTextBox.Text = shoe?.Name ?? "";
         priceNumericUpDown.Value = shoe?.Price ?? 0;
         manufacturerComboBox.DataSource = manufacturers.GetAll().ToList();
-        if (shoe is not null) manufacturerComboBox.SelectedValue = shoe.ManufacturerId;
+        if (shoe is not null)
+            manufacturerComboBox.SelectedValue = shoe.ManufacturerId;
         categoryComboBox.DataSource = Enum.GetValues<FootwearCategory>()
-            .Select(x => new { Value = x, Label = Ui.Category(x) }).ToList();
-        if (shoe is not null) categoryComboBox.SelectedValue = shoe.Category;
+            .Select(
+            x => new
+            {
+                Value = x,
+                Label = Ui.Category(x)
+            }
+        )
+            .ToList();
+        if (shoe is not null)
+            categoryComboBox.SelectedValue = shoe.Category;
         for (int i = 0; i < SeasonValues.Length; i++)
             seasonsCheckedListBox.SetItemChecked(i, (shoe?.Seasons ?? Season.All).HasFlag(SeasonValues[i]));
         saveButton.Click += SaveButton_Click;
@@ -45,15 +53,27 @@ public partial class ShoeEditorForm : Form
             if (manufacturerComboBox.SelectedValue is not Guid manufacturerId)
                 throw new ArgumentException("Выберите производителя. Сначала заполните справочник производителей.");
             var seasons = Season.None;
-            foreach (int index in seasonsCheckedListBox.CheckedIndices) seasons |= SeasonValues[index];
-            if (seasons == Season.None) throw new ArgumentException("Выберите хотя бы один сезон.");
+            foreach (int index in seasonsCheckedListBox.CheckedIndices)
+                seasons |= SeasonValues[index];
+            if (seasons == Season.None)
+                throw new ArgumentException("Выберите хотя бы один сезон.");
             if (priceNumericUpDown.Value <= 0)
                 throw new ArgumentException("Цена должна быть положительной.");
             if (categoryComboBox.SelectedValue is not FootwearCategory category)
                 throw new ArgumentException("Выберите категорию.");
-            var item = Shoe.Create(_id, Ui.Required(articleTextBox, "Артикул"), Ui.Required(shoeNameTextBox, "Название"),
-                manufacturerId, priceNumericUpDown.Value, category, seasons);
-            if (_editing) _repository!.Update(item); else _repository!.Add(item);
+            var item = Shoe.Create(
+                _id,
+                Ui.Required(articleTextBox, "Артикул"),
+                Ui.Required(shoeNameTextBox, "Название"),
+                manufacturerId,
+                priceNumericUpDown.Value,
+                category,
+                seasons
+            );
+            if (_editing)
+                _repository!.Update(item);
+            else
+                _repository!.Add(item);
             DialogResult = DialogResult.OK;
             Close();
         });

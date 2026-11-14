@@ -1,4 +1,4 @@
-using ShoeStore.WinForms.Repositories.Implementations;
+﻿using ShoeStore.WinForms.Repositories.Implementations;
 
 namespace ShoeStore.WinForms.Forms;
 
@@ -18,7 +18,8 @@ public sealed partial class InventoryForm : Form
         Shown += RefreshInventory;
     }
 
-    private void RefreshInventory(object? sender, EventArgs e) => Ui.Run(this, Reload);
+    private void RefreshInventory(object? sender, EventArgs e) =>
+        Ui.Run(this, Reload);
 
     private void Reload()
     {

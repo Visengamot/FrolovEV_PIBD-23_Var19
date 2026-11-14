@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using Serilog;
 using ShoeStore.WinForms.Data;
 using ShoeStore.WinForms.Forms;

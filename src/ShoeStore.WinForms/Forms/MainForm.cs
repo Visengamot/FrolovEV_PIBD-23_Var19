@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 
 namespace ShoeStore.WinForms.Forms;
 
@@ -21,9 +21,11 @@ public partial class MainForm : Form
         inventoryMenuItem.Click += (_, _) => OpenForm<InventoryForm>();
     }
 
-    private void OpenForm<T>() where T : Form
+    private void OpenForm<T>()
+        where T : Form
     {
-        if (_scope is null) return;
+        if (_scope is null)
+            return;
         Ui.Run(this, () =>
         {
             var existing = MdiChildren.OfType<T>().FirstOrDefault();
@@ -32,6 +34,7 @@ public partial class MainForm : Form
                 existing.Activate();
                 return;
             }
+
             var childScope = _scope.BeginLifetimeScope();
             try
             {

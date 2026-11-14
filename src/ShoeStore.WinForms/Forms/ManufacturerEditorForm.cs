@@ -1,4 +1,4 @@
-using ShoeStore.WinForms.Entities;
+﻿using ShoeStore.WinForms.Entities;
 using ShoeStore.WinForms.Repositories;
 
 namespace ShoeStore.WinForms.Forms;
@@ -14,8 +14,7 @@ public partial class ManufacturerEditorForm : Form
         InitializeComponent();
     }
 
-    public ManufacturerEditorForm(IManufacturerRepository repository, Manufacturer? manufacturer = null)
-        : this()
+    public ManufacturerEditorForm(IManufacturerRepository repository, Manufacturer? manufacturer = null) : this()
     {
         ArgumentNullException.ThrowIfNull(repository);
         _repository = repository;
@@ -31,8 +30,15 @@ public partial class ManufacturerEditorForm : Form
     {
         Ui.Run(this, () =>
         {
-            var item = Manufacturer.Create(_id, Ui.Required(manufacturerNameTextBox, "Название"), Ui.Required(countryTextBox, "Страна"));
-            if (_editing) _repository!.Update(item); else _repository!.Add(item);
+            var item = Manufacturer.Create(
+                _id,
+                Ui.Required(manufacturerNameTextBox, "Название"),
+                Ui.Required(countryTextBox, "Страна")
+            );
+            if (_editing)
+                _repository!.Update(item);
+            else
+                _repository!.Add(item);
             DialogResult = DialogResult.OK;
             Close();
         });

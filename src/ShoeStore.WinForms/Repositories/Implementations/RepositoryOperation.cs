@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using ShoeStore.WinForms.Data;
 
@@ -17,10 +17,20 @@ internal static class RepositoryOperation
                 logger.Information("{Operation} completed: found={Found}", operation, result is not null);
             return result;
         }
-        catch (Exception error) { logger.Error(error, "{Operation} failed", operation); throw; }
+        catch (Exception error)
+        {
+            logger.Error(error, "{Operation} failed", operation);
+            throw;
+        }
     }
 
-    internal static void Write(DataContext context, Serilog.ILogger logger, string operation, object input, Action action)
+    internal static void Write(
+        DataContext context,
+        Serilog.ILogger logger,
+        string operation,
+        object input,
+        Action action
+    )
     {
         logger.Information("{Operation} started: {@Input}", operation, input);
         context.ChangeTracker.Clear();
@@ -46,12 +56,20 @@ internal static class RepositoryOperation
                 _ => "Не удалось сохранить данные. Подробности записаны в журнал."
             });
         }
-        catch (PostgresException error) when (error.SqlState == PostgresErrorCodes.SerializationFailure || error.SqlState == PostgresErrorCodes.DeadlockDetected)
+        catch (PostgresException error) when (error.SqlState == PostgresErrorCodes.SerializationFailure
+            || error.SqlState == PostgresErrorCodes.DeadlockDetected)
         {
             logger.Warning(error, "{Operation} conflicted with another transaction", operation);
             throw new InvalidOperationException("Данные изменены другим пользователем. Повторите операцию.");
         }
-        catch (Exception error) { logger.Error(error, "{Operation} failed", operation); throw; }
-        finally { context.ChangeTracker.Clear(); }
+        catch (Exception error)
+        {
+            logger.Error(error, "{Operation} failed", operation);
+            throw;
+        }
+        finally
+        {
+            context.ChangeTracker.Clear();
+        }
     }
 }

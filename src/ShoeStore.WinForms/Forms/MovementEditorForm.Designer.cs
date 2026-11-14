@@ -1,5 +1,4 @@
-#nullable disable
-
+﻿#nullable disable
 namespace ShoeStore.WinForms.Forms;
 
 partial class MovementEditorForm
@@ -24,7 +23,8 @@ partial class MovementEditorForm
 
     protected override void Dispose(bool disposing)
     {
-        if (disposing) components?.Dispose();
+        if (disposing)
+            components?.Dispose();
         base.Dispose(disposing);
     }
 
@@ -86,7 +86,13 @@ partial class MovementEditorForm
         _lines.BackgroundColor = Color.White;
         _lines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         _lines.BorderStyle = BorderStyle.FixedSingle;
-        _lines.Columns.AddRange(new DataGridViewColumn[] { ShoeColumn, SizeColumn, QuantityColumn, UnitPriceColumn });
+        _lines.Columns.AddRange(new DataGridViewColumn[]
+        {
+            ShoeColumn,
+            SizeColumn,
+            QuantityColumn,
+            UnitPriceColumn
+        });
         ShoeColumn.Name = "ShoeColumn";
         ShoeColumn.HeaderText = "Обувь";
         ShoeColumn.DisplayMember = "Label";

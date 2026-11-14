@@ -1,4 +1,7 @@
+﻿namespace ShoeStore.WinForms.Entities.Enums;
 
-namespace ShoeStore.WinForms.Entities.Enums;
-
-public enum MovementType { Receipt, Sale }
+public enum MovementType
+{
+    Receipt,
+    Sale
+}
