@@ -1,0 +1,166 @@
+﻿#nullable disable
+namespace ShoeStore.WinForms.Forms;
+
+partial class MovementEditorForm
+{
+    private System.ComponentModel.IContainer components = null;
+    private DateTimePicker _date = null!;
+    private ComboBox _type = null!;
+    private DataGridView _lines = null!;
+    private Label _total = null!;
+    private FlowLayoutPanel movementHeader = null!;
+    private Label dateLabel = null!;
+    private Label typeLabel = null!;
+    private FlowLayoutPanel movementFooter = null!;
+    private Button cancelButton = null!;
+    private Button saveMovementButton = null!;
+    private Button removeLineButton = null!;
+    private Label movementHintLabel = null!;
+    private DataGridViewComboBoxColumn ShoeColumn = null!;
+    private DataGridViewComboBoxColumn SizeColumn = null!;
+    private DataGridViewTextBoxColumn QuantityColumn = null!;
+    private DataGridViewTextBoxColumn UnitPriceColumn = null!;
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing)
+            components?.Dispose();
+        base.Dispose(disposing);
+    }
+
+    private void InitializeComponent()
+    {
+        _date = new DateTimePicker();
+        _type = new ComboBox();
+        _lines = new DataGridView();
+        _total = new Label();
+        movementHeader = new FlowLayoutPanel();
+        dateLabel = new Label();
+        typeLabel = new Label();
+        movementFooter = new FlowLayoutPanel();
+        cancelButton = new Button();
+        saveMovementButton = new Button();
+        removeLineButton = new Button();
+        movementHintLabel = new Label();
+        ShoeColumn = new DataGridViewComboBoxColumn();
+        SizeColumn = new DataGridViewComboBoxColumn();
+        QuantityColumn = new DataGridViewTextBoxColumn();
+        UnitPriceColumn = new DataGridViewTextBoxColumn();
+        ((System.ComponentModel.ISupportInitialize)_lines).BeginInit();
+        movementHeader.SuspendLayout();
+        movementFooter.SuspendLayout();
+        SuspendLayout();
+        _date.Name = "movementDatePicker";
+        _date.Format = DateTimePickerFormat.Short;
+        _date.Width = 130;
+        _type.Name = "movementTypeComboBox";
+        _type.DropDownStyle = ComboBoxStyle.DropDownList;
+        _type.Width = 170;
+        _type.DisplayMember = "Label";
+        _type.ValueMember = "Value";
+        movementHeader.Name = "movementHeader";
+        movementHeader.Dock = DockStyle.Top;
+        movementHeader.Height = 58;
+        movementHeader.Padding = new Padding(12);
+        movementHeader.Controls.Add(dateLabel);
+        movementHeader.Controls.Add(_date);
+        movementHeader.Controls.Add(typeLabel);
+        movementHeader.Controls.Add(_type);
+        dateLabel.Name = "dateLabel";
+        dateLabel.Text = "Дата";
+        dateLabel.AutoSize = true;
+        dateLabel.Padding = new Padding(0, 5, 5, 0);
+        typeLabel.Name = "typeLabel";
+        typeLabel.Text = "Вид операции";
+        typeLabel.AutoSize = true;
+        typeLabel.Padding = new Padding(20, 5, 5, 0);
+        _lines.Name = "movementLinesGrid";
+        _lines.Dock = DockStyle.Fill;
+        _lines.AutoGenerateColumns = false;
+        _lines.ReadOnly = false;
+        _lines.AllowUserToAddRows = true;
+        _lines.AllowUserToDeleteRows = true;
+        _lines.SelectionMode = DataGridViewSelectionMode.CellSelect;
+        _lines.MultiSelect = false;
+        _lines.RowHeadersVisible = false;
+        _lines.BackgroundColor = Color.White;
+        _lines.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        _lines.BorderStyle = BorderStyle.FixedSingle;
+        _lines.Columns.AddRange(new DataGridViewColumn[]
+        {
+            ShoeColumn,
+            SizeColumn,
+            QuantityColumn,
+            UnitPriceColumn
+        });
+        ShoeColumn.Name = "ShoeColumn";
+        ShoeColumn.HeaderText = "Обувь";
+        ShoeColumn.DisplayMember = "Label";
+        ShoeColumn.ValueMember = "Id";
+        ShoeColumn.FillWeight = 230F;
+        SizeColumn.Name = "SizeColumn";
+        SizeColumn.HeaderText = "Размер";
+        SizeColumn.DisplayMember = "Value";
+        SizeColumn.ValueMember = "Id";
+        SizeColumn.FillWeight = 70F;
+        QuantityColumn.Name = "QuantityColumn";
+        QuantityColumn.HeaderText = "Количество";
+        QuantityColumn.ValueType = typeof(int);
+        QuantityColumn.FillWeight = 80F;
+        UnitPriceColumn.Name = "UnitPriceColumn";
+        UnitPriceColumn.HeaderText = "Цена за единицу, ₽";
+        UnitPriceColumn.ValueType = typeof(decimal);
+        UnitPriceColumn.DefaultCellStyle.Format = "N2";
+        movementFooter.Name = "movementFooter";
+        movementFooter.Dock = DockStyle.Bottom;
+        movementFooter.Height = 60;
+        movementFooter.Padding = new Padding(10);
+        movementFooter.FlowDirection = FlowDirection.RightToLeft;
+        movementFooter.Controls.Add(cancelButton);
+        movementFooter.Controls.Add(saveMovementButton);
+        movementFooter.Controls.Add(removeLineButton);
+        movementFooter.Controls.Add(_total);
+        cancelButton.Name = "cancelButton";
+        cancelButton.Text = "Отмена";
+        cancelButton.AutoSize = true;
+        cancelButton.Height = 32;
+        cancelButton.MinimumSize = new Size(100, 32);
+        cancelButton.DialogResult = DialogResult.Cancel;
+        saveMovementButton.Name = "saveMovementButton";
+        saveMovementButton.Text = "Сохранить";
+        saveMovementButton.AutoSize = true;
+        saveMovementButton.Height = 32;
+        saveMovementButton.MinimumSize = new Size(100, 32);
+        removeLineButton.Name = "removeLineButton";
+        removeLineButton.Text = "Удалить строку";
+        removeLineButton.AutoSize = true;
+        removeLineButton.Height = 32;
+        removeLineButton.MinimumSize = new Size(100, 32);
+        _total.Name = "totalLabel";
+        _total.AutoSize = true;
+        _total.Padding = new Padding(12);
+        _total.Text = "Итого: 0,00 ₽";
+        movementHintLabel.Name = "movementHintLabel";
+        movementHintLabel.Text = "Добавляйте позиции в пустой строке таблицы. Сохранённые операции не изменяются.";
+        movementHintLabel.Dock = DockStyle.Bottom;
+        movementHintLabel.Height = 28;
+        movementHintLabel.Padding = new Padding(10, 3, 0, 0);
+        Controls.Add(_lines);
+        Controls.Add(movementHeader);
+        Controls.Add(movementHintLabel);
+        Controls.Add(movementFooter);
+        CancelButton = cancelButton;
+        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleMode = AutoScaleMode.Font;
+        Text = "Добавление движения товара";
+        Name = "MovementEditorForm";
+        StartPosition = FormStartPosition.CenterParent;
+        ClientSize = new Size(984, 561);
+        MinimumSize = new Size(760, 420);
+        ((System.ComponentModel.ISupportInitialize)_lines).EndInit();
+        movementHeader.ResumeLayout(false);
+        movementHeader.PerformLayout();
+        movementFooter.ResumeLayout(false);
+        movementFooter.PerformLayout();
+        ResumeLayout(false);
+    }
+}
