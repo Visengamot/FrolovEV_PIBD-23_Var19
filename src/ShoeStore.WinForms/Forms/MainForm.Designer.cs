@@ -1,5 +1,4 @@
-#nullable disable
-
+﻿#nullable disable
 namespace ShoeStore.WinForms.Forms
 {
     partial class MainForm
@@ -16,10 +15,10 @@ namespace ShoeStore.WinForms.Forms
         private ToolStripMenuItem reportsMenuItem;
         private StatusStrip mainStatusStrip;
         private ToolStripStatusLabel storageStatusLabel;
-
         protected override void Dispose(bool disposing)
         {
-            if (disposing && components != null) components.Dispose();
+            if (disposing && components != null)
+                components.Dispose();
             base.Dispose(disposing);
         }
 
@@ -39,12 +38,24 @@ namespace ShoeStore.WinForms.Forms
             mainMenuStrip.SuspendLayout();
             mainStatusStrip.SuspendLayout();
             SuspendLayout();
-            mainMenuStrip.Items.AddRange(new ToolStripItem[] { catalogsMenuItem, operationsMenuItem, reportsMenuItem });
+            mainMenuStrip.Items.AddRange(new ToolStripItem[]
+            {
+                catalogsMenuItem,
+                operationsMenuItem,
+                reportsMenuItem
+            });
             mainMenuStrip.Name = "mainMenuStrip";
             mainMenuStrip.Dock = DockStyle.Top;
             catalogsMenuItem.Name = "catalogsMenuItem";
             catalogsMenuItem.Text = "Справочники";
-            catalogsMenuItem.DropDownItems.AddRange(new ToolStripItem[] { manufacturersMenuItem, shoesMenuItem, sizesMenuItem });
+            catalogsMenuItem.DropDownItems.AddRange(
+                new ToolStripItem[]
+            {
+                manufacturersMenuItem,
+                shoesMenuItem,
+                sizesMenuItem
+            }
+            );
             manufacturersMenuItem.Name = "manufacturersMenuItem";
             manufacturersMenuItem.Text = "Производители";
             shoesMenuItem.Name = "shoesMenuItem";
@@ -53,7 +64,11 @@ namespace ShoeStore.WinForms.Forms
             sizesMenuItem.Text = "Размеры";
             operationsMenuItem.Name = "operationsMenuItem";
             operationsMenuItem.Text = "Операции";
-            operationsMenuItem.DropDownItems.AddRange(new ToolStripItem[] { movementsMenuItem, inventoryMenuItem });
+            operationsMenuItem.DropDownItems.AddRange(new ToolStripItem[]
+            {
+                movementsMenuItem,
+                inventoryMenuItem
+            });
             movementsMenuItem.Name = "movementsMenuItem";
             movementsMenuItem.Text = "Движение товара";
             inventoryMenuItem.Name = "inventoryMenuItem";
@@ -61,7 +76,10 @@ namespace ShoeStore.WinForms.Forms
             reportsMenuItem.Name = "reportsMenuItem";
             reportsMenuItem.Text = "Отчеты";
             mainStatusStrip.Name = "mainStatusStrip";
-            mainStatusStrip.Items.AddRange(new ToolStripItem[] { storageStatusLabel });
+            mainStatusStrip.Items.AddRange(new ToolStripItem[]
+            {
+                storageStatusLabel
+            });
             storageStatusLabel.Name = "storageStatusLabel";
             storageStatusLabel.Spring = true;
             storageStatusLabel.TextAlign = ContentAlignment.MiddleLeft;

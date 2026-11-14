@@ -1,4 +1,10 @@
+﻿namespace ShoeStore.WinForms.Entities.Enums;
 
-namespace ShoeStore.WinForms.Entities.Enums;
-
-public enum FootwearCategory { Sneakers, Boots, Shoes, Sandals, Slippers }
+public enum FootwearCategory
+{
+    Sneakers,
+    Boots,
+    Shoes,
+    Sandals,
+    Slippers
+}

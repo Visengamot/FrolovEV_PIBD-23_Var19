@@ -1,5 +1,4 @@
-#nullable disable
-
+﻿#nullable disable
 namespace ShoeStore.WinForms.Forms;
 
 partial class ShoeEditorForm
@@ -19,10 +18,10 @@ partial class ShoeEditorForm
     private CheckedListBox seasonsCheckedListBox = null!;
     private Button saveButton = null!;
     private Button cancelButton = null!;
-
     protected override void Dispose(bool disposing)
     {
-        if (disposing && components != null) components.Dispose();
+        if (disposing && components != null)
+            components.Dispose();
         base.Dispose(disposing);
     }
 
@@ -133,7 +132,13 @@ partial class ShoeEditorForm
         seasonsCheckedListBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
         seasonsCheckedListBox.CheckOnClick = true;
         seasonsCheckedListBox.FormattingEnabled = true;
-        seasonsCheckedListBox.Items.AddRange(new object[] { "Весна", "Лето", "Осень", "Зима" });
+        seasonsCheckedListBox.Items.AddRange(new object[]
+        {
+            "Весна",
+            "Лето",
+            "Осень",
+            "Зима"
+        });
         seasonsCheckedListBox.Location = new Point(174, 232);
         seasonsCheckedListBox.Name = "seasonsCheckedListBox";
         seasonsCheckedListBox.Size = new Size(360, 94);

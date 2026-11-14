@@ -1,5 +1,4 @@
-#nullable disable
-
+﻿#nullable disable
 namespace ShoeStore.WinForms.Forms;
 
 partial class MovementsForm
@@ -25,10 +24,10 @@ partial class MovementsForm
     private DataGridViewTextBoxColumn itemQuantityColumn = null!;
     private DataGridViewTextBoxColumn itemUnitPriceColumn = null!;
     private DataGridViewTextBoxColumn itemTotalColumn = null!;
-
     protected override void Dispose(bool disposing)
     {
-        if (disposing) components?.Dispose();
+        if (disposing)
+            components?.Dispose();
         base.Dispose(disposing);
     }
 

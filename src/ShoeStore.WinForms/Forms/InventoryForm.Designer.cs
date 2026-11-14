@@ -1,5 +1,4 @@
-#nullable disable
-
+﻿#nullable disable
 namespace ShoeStore.WinForms.Forms;
 
 partial class InventoryForm
@@ -17,10 +16,10 @@ partial class InventoryForm
     private DataGridViewTextBoxColumn BalanceColumn = null!;
     private DataGridViewTextBoxColumn CurrentMonthSoldColumn = null!;
     private DataGridViewTextBoxColumn CurrentMonthRevenueColumn = null!;
-
     protected override void Dispose(bool disposing)
     {
-        if (disposing) components?.Dispose();
+        if (disposing)
+            components?.Dispose();
         base.Dispose(disposing);
     }
 

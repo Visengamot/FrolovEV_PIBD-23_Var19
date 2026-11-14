@@ -1,5 +1,4 @@
-#nullable disable
-
+﻿#nullable disable
 namespace ShoeStore.WinForms.Forms;
 
 partial class ManufacturerEditorForm
@@ -11,10 +10,10 @@ partial class ManufacturerEditorForm
     private TextBox countryTextBox = null!;
     private Button saveButton = null!;
     private Button cancelButton = null!;
-
     protected override void Dispose(bool disposing)
     {
-        if (disposing && components != null) components.Dispose();
+        if (disposing && components != null)
+            components.Dispose();
         base.Dispose(disposing);
     }
 

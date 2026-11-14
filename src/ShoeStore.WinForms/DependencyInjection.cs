@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using ShoeStore.WinForms.Repositories.Implementations;
 using ShoeStore.WinForms.Repositories;
 using ShoeStore.WinForms.Forms;
@@ -7,9 +7,8 @@ namespace ShoeStore.WinForms;
 
 public static class DependencyInjection
 {
-    public static IContainer CreateContainer() => new ContainerBuilder().RegisterShoeStore().Build();
-
-    /// <summary>Registers one shared session store and repositories; forms are resolved per request.</summary>
+    public static IContainer CreateContainer() =>
+        new ContainerBuilder().RegisterShoeStore().Build();
     public static ContainerBuilder RegisterShoeStore(this ContainerBuilder builder)
     {
         ArgumentNullException.ThrowIfNull(builder);

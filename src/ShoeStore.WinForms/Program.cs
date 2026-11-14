@@ -1,4 +1,4 @@
-using Autofac;
+﻿using Autofac;
 using ShoeStore.WinForms;
 using ShoeStore.WinForms.Forms;
 using System.Globalization;
@@ -14,8 +14,15 @@ internal static class Program
         CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.GetCultureInfo("ru-RU");
         ApplicationConfiguration.Initialize();
         Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
-        Application.ThreadException += (_, e) => MessageBox.Show(e.Exception.GetBaseException().Message,
-            "Ошибка приложения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Application.ThreadException += (
+            _,
+            e
+        ) => MessageBox.Show(
+            e.Exception.GetBaseException().Message,
+            "Ошибка приложения",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error
+        );
         try
         {
             using var container = DependencyInjection.CreateContainer();
@@ -23,7 +30,12 @@ internal static class Program
         }
         catch (Exception exception)
         {
-            MessageBox.Show(exception.GetBaseException().Message, "Ошибка запуска", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(
+                exception.GetBaseException().Message,
+                "Ошибка запуска",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error
+            );
         }
     }
 }
