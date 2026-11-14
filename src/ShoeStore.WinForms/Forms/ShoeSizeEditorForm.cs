@@ -1,27 +1,39 @@
 using ShoeStore.WinForms.Entities;
 using ShoeStore.WinForms.Repositories;
-using ShoeStore.WinForms.Forms;
 
 namespace ShoeStore.WinForms.Forms;
 
-public sealed class ShoeSizeEditorForm : EditorForm
+public partial class ShoeSizeEditorForm : Form
 {
-    private readonly IShoeSizeRepository _repository;
+    private readonly IShoeSizeRepository? _repository;
     private readonly Guid _id;
     private readonly bool _editing;
-    private readonly NumericUpDown _size = Number("sizeNumericUpDown", 100, 1);
 
-    public ShoeSizeEditorForm(IShoeSizeRepository repository, ShoeSize? size = null)
-        : base(size is null ? "Добавление размера" : "Изменение размера")
+    public ShoeSizeEditorForm()
     {
-        _repository = repository; _id = size?.Id ?? Guid.NewGuid(); _editing = size is not null;
-        _size.Minimum = 10; _size.Maximum = 60; _size.Value = size?.Value ?? 36; _size.Increment = 0.5m;
-        Field("Размер", _size); ClientSize = new Size(460, 145);
+        InitializeComponent();
     }
 
-    protected override void Save()
+    public ShoeSizeEditorForm(IShoeSizeRepository repository, ShoeSize? size = null)
+        : this()
     {
-        var item = ShoeSize.Create(_id, _size.Value);
-        if (_editing) _repository.Update(item); else _repository.Add(item);
+        ArgumentNullException.ThrowIfNull(repository);
+        _repository = repository;
+        _id = size?.Id ?? Guid.NewGuid();
+        _editing = size is not null;
+        Text = _editing ? "Изменение размера" : "Добавление размера";
+        sizeNumericUpDown.Value = size?.Value ?? 36;
+        saveButton.Click += SaveButton_Click;
+    }
+
+    private void SaveButton_Click(object? sender, EventArgs e)
+    {
+        Ui.Run(this, () =>
+        {
+            var item = ShoeSize.Create(_id, sizeNumericUpDown.Value);
+            if (_editing) _repository!.Update(item); else _repository!.Add(item);
+            DialogResult = DialogResult.OK;
+            Close();
+        });
     }
 }

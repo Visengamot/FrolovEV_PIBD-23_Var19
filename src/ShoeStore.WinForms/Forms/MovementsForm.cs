@@ -1,42 +1,41 @@
-using ShoeStore.WinForms.Entities;
 using ShoeStore.WinForms.Repositories;
-using ShoeStore.WinForms.Forms;
 
 namespace ShoeStore.WinForms.Forms;
 
-public sealed class MovementsForm : Form
+public sealed partial class MovementsForm : Form
 {
-    private readonly IStockMovementRepository _movements;
-    private readonly IShoeRepository _shoes;
-    private readonly IShoeSizeRepository _sizes;
-    private readonly DataGridView _operations = Ui.Grid("movementsGrid");
-    private readonly DataGridView _items = Ui.Grid("savedMovementItemsGrid");
+    private readonly IStockMovementRepository _movements = null!;
+    private readonly IShoeRepository _shoes = null!;
+    private readonly IShoeSizeRepository _sizes = null!;
 
-    public MovementsForm(IStockMovementRepository movements, IShoeRepository shoes, IShoeSizeRepository sizes)
+    public MovementsForm()
     {
-        _movements = movements; _shoes = shoes; _sizes = sizes;
-        Text = "Движение товара"; Name = nameof(MovementsForm); Size = new Size(1080, 700);
-        MinimumSize = new Size(750, 450); StartPosition = FormStartPosition.CenterParent;
-        Ui.Column(_operations, "Id", "Код"); _operations.Columns["IdColumn"].Visible = false;
-        Ui.Column(_operations, "Date", "Дата", "d"); Ui.Column(_operations, "Type", "Вид операции");
-        Ui.Column(_operations, "Lines", "Позиций"); Ui.Column(_operations, "Quantity", "Количество пар"); Ui.Column(_operations, "Total", "Сумма, ₽", "N2");
-        Ui.Column(_items, "Article", "Артикул"); Ui.Column(_items, "Shoe", "Обувь"); Ui.Column(_items, "Size", "Размер", "0.#");
-        Ui.Column(_items, "Quantity", "Количество"); Ui.Column(_items, "UnitPrice", "Цена, ₽", "N2"); Ui.Column(_items, "Total", "Сумма, ₽", "N2");
-        var toolbar = new FlowLayoutPanel { Dock = DockStyle.Top, Height = 52, Padding = new Padding(10) };
-        toolbar.Controls.Add(Ui.Button("addMovementButton", "Добавить", () => Ui.Run(this, () =>
-        {
-            using var editor = new MovementEditorForm(_movements, _shoes, _sizes);
-            if (editor.ShowDialog(this) == DialogResult.OK) Reload();
-        })));
-        toolbar.Controls.Add(Ui.Button("refreshMovementsButton", "Обновить", () => Ui.Run(this, Reload)));
-        toolbar.Controls.Add(new Label { Text = "Сохранённые операции доступны только для просмотра.", AutoSize = true, Padding = new Padding(12, 8, 0, 0) });
-        var split = new SplitContainer { Name = "movementSplitContainer", Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
-        split.Panel1.Controls.Add(_operations);
-        var detailHeader = new Label { Text = "Позиции выбранной операции", Dock = DockStyle.Top, Height = 30, Padding = new Padding(8) };
-        split.Panel2.Controls.Add(_items); split.Panel2.Controls.Add(detailHeader);
-        Controls.Add(split); Controls.Add(toolbar);
-        _operations.SelectionChanged += (_, _) => Ui.Run(this, LoadItems);
-        Shown += (_, _) => { split.SplitterDistance = Math.Max(150, split.Height / 2); Ui.Run(this, Reload); };
+        InitializeComponent();
+    }
+
+    public MovementsForm(IStockMovementRepository movements, IShoeRepository shoes, IShoeSizeRepository sizes) : this()
+    {
+        _movements = movements;
+        _shoes = shoes;
+        _sizes = sizes;
+        addMovementButton.Click += AddMovement;
+        refreshMovementsButton.Click += RefreshMovements;
+        _operations.SelectionChanged += SelectionChanged;
+        Shown += FormShown;
+    }
+
+    private void AddMovement(object? sender, EventArgs e) => Ui.Run(this, () =>
+    {
+        using var editor = new MovementEditorForm(_movements, _shoes, _sizes);
+        if (editor.ShowDialog(this) == DialogResult.OK) Reload();
+    });
+
+    private void RefreshMovements(object? sender, EventArgs e) => Ui.Run(this, Reload);
+    private void SelectionChanged(object? sender, EventArgs e) => Ui.Run(this, LoadItems);
+    private void FormShown(object? sender, EventArgs e)
+    {
+        movementSplitContainer.SplitterDistance = Math.Max(150, movementSplitContainer.Height / 2);
+        Ui.Run(this, Reload);
     }
 
     private void Reload() => _operations.DataSource = _movements.GetAll().OrderByDescending(x => x.Date).Select(x =>
