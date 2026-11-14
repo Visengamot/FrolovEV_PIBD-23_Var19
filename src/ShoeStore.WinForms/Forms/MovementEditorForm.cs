@@ -6,31 +6,26 @@ using System.Globalization;
 
 namespace ShoeStore.WinForms.Forms;
 
-public sealed class MovementEditorForm : Form
+public sealed partial class MovementEditorForm : Form
 {
-    private readonly IStockMovementRepository _movements;
-    private readonly DateTimePicker _date = new() { Name = "movementDatePicker", Format = DateTimePickerFormat.Short, Width = 130 };
-    private readonly ComboBox _type = new() { Name = "movementTypeComboBox", DropDownStyle = ComboBoxStyle.DropDownList, Width = 170, DisplayMember = "Label", ValueMember = "Value" };
-    private readonly DataGridView _lines = Ui.Grid("movementLinesGrid", false);
-    private readonly Label _total = new() { Name = "totalLabel", AutoSize = true, Padding = new Padding(12), Text = "Итого: 0,00 ₽" };
-    private readonly Dictionary<Guid, decimal> _prices;
+    private readonly IStockMovementRepository _movements = null!;
+    private readonly Dictionary<Guid, decimal> _prices = null!;
 
-    public MovementEditorForm(IStockMovementRepository movements, IShoeRepository shoes, IShoeSizeRepository sizes)
+    public MovementEditorForm()
     {
-        _movements = movements; Text = "Добавление движения товара"; Name = nameof(MovementEditorForm);
-        StartPosition = FormStartPosition.CenterParent; Size = new Size(1000, 600); MinimumSize = new Size(760, 420);
+        InitializeComponent();
+    }
+
+    public MovementEditorForm(IStockMovementRepository movements, IShoeRepository shoes, IShoeSizeRepository sizes) : this()
+    {
+        _movements = movements;
         var shoeList = shoes.GetAll().Select(x => new { x.Id, Label = $"{x.Article} — {x.Name}", x.Price }).ToList();
         var sizeList = sizes.GetAll().OrderBy(x => x.Value).ToList();
         _prices = shoeList.ToDictionary(x => x.Id, x => x.Price);
         _date.MaxDate = DateTime.Today;
         _type.DataSource = Enum.GetValues<MovementType>().Select(x => new { Value = x, Label = Ui.Movement(x) }).ToList();
-        var header = new FlowLayoutPanel { Name = "movementHeader", Dock = DockStyle.Top, Height = 58, Padding = new Padding(12) };
-        header.Controls.Add(new Label { Text = "Дата", AutoSize = true, Padding = new Padding(0, 5, 5, 0) }); header.Controls.Add(_date);
-        header.Controls.Add(new Label { Text = "Вид операции", AutoSize = true, Padding = new Padding(20, 5, 5, 0) }); header.Controls.Add(_type);
-        _lines.Columns.Add(new DataGridViewComboBoxColumn { Name = "ShoeColumn", HeaderText = "Обувь", DataSource = shoeList, DisplayMember = "Label", ValueMember = "Id", FillWeight = 230 });
-        _lines.Columns.Add(new DataGridViewComboBoxColumn { Name = "SizeColumn", HeaderText = "Размер", DataSource = sizeList, DisplayMember = "Value", ValueMember = "Id", FillWeight = 70 });
-        _lines.Columns.Add(new DataGridViewTextBoxColumn { Name = "QuantityColumn", HeaderText = "Количество", ValueType = typeof(int), FillWeight = 80 });
-        _lines.Columns.Add(new DataGridViewTextBoxColumn { Name = "UnitPriceColumn", HeaderText = "Цена за единицу, ₽", ValueType = typeof(decimal), DefaultCellStyle = new DataGridViewCellStyle { Format = "N2" } });
+        ShoeColumn.DataSource = shoeList;
+        SizeColumn.DataSource = sizeList;
         _lines.DataError += (_, e) => { e.ThrowException = false; MessageBox.Show(this, "Некорректное значение. Количество — целое число, цена — число с не более чем двумя знаками после запятой.", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Warning); };
         _lines.DefaultValuesNeeded += (_, e) => { e.Row.Cells["QuantityColumn"].Value = 1; e.Row.Cells["UnitPriceColumn"].Value = 0m; };
         _lines.CurrentCellDirtyStateChanged += (_, _) => { if (_lines.IsCurrentCellDirty && _lines.CurrentCell is DataGridViewComboBoxCell) _lines.CommitEdit(DataGridViewDataErrorContexts.Commit); };
@@ -41,15 +36,12 @@ public sealed class MovementEditorForm : Form
             UpdateTotal();
         };
         _lines.RowsRemoved += (_, _) => UpdateTotal();
-        var footer = new FlowLayoutPanel { Dock = DockStyle.Bottom, Height = 60, Padding = new Padding(10), FlowDirection = FlowDirection.RightToLeft };
-        var cancel = Ui.Button("cancelButton", "Отмена", () => { DialogResult = DialogResult.Cancel; Close(); });
-        footer.Controls.Add(cancel);
-        footer.Controls.Add(Ui.Button("saveMovementButton", "Сохранить", () => Ui.Run(this, SaveMovement)));
-        footer.Controls.Add(Ui.Button("removeLineButton", "Удалить строку", () => Ui.Run(this, () => { if (_lines.CurrentRow is { IsNewRow: false } row) _lines.Rows.Remove(row); })));
-        footer.Controls.Add(_total);
-        Controls.Add(_lines); Controls.Add(header); Controls.Add(footer); CancelButton = cancel;
-        var hint = new Label { Text = "Добавляйте позиции в пустой строке таблицы. Сохранённые операции не изменяются.", Dock = DockStyle.Bottom, Height = 28, Padding = new Padding(10, 3, 0, 0) };
-        Controls.Add(hint); hint.BringToFront();
+        cancelButton.Click += (_, _) => { DialogResult = DialogResult.Cancel; Close(); };
+        saveMovementButton.Click += (_, _) => Ui.Run(this, SaveMovement);
+        removeLineButton.Click += (_, _) => Ui.Run(this, () =>
+        {
+            if (_lines.CurrentRow is { IsNewRow: false } row) _lines.Rows.Remove(row);
+        });
     }
 
     private void UpdateTotal()

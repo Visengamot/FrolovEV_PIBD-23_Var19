@@ -27,4 +27,15 @@
     <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
     <None Update="appsettings.Local.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Forms\MainForm.cs;Forms\ManufacturersForm.cs;Forms\ShoesForm.cs;Forms\ShoeSizesForm.cs;Forms\ManufacturerEditorForm.cs;Forms\ShoeEditorForm.cs;Forms\ShoeSizeEditorForm.cs;Forms\MovementsForm.cs;Forms\InventoryForm.cs;Forms\MovementEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\*.Designer.cs">
+      <DependentUpon>$([System.String]::Copy('%(Filename)').Replace('.Designer', '')).cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Update="Forms\*.resx">
+      <DependentUpon>%(Filename).cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
