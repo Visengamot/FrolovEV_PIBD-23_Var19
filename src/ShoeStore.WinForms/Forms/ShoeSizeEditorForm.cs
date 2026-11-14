@@ -8,6 +8,7 @@ public partial class ShoeSizeEditorForm : Form
     private readonly IShoeSizeRepository? _repository;
     private readonly Guid _id;
     private readonly bool _editing;
+
     public ShoeSizeEditorForm()
     {
         InitializeComponent();

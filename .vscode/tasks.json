@@ -1,0 +1,43 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Initialize PostgreSQL",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/Database/Initialize-Database.ps1"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Start PostgreSQL",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/Database/Start-Database.ps1"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Stop PostgreSQL",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/Database/Stop-Database.ps1"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Apply migrations",
+      "type": "process",
+      "command": "dotnet",
+      "args": ["ef", "database", "update", "--project", "${workspaceFolder}/src/ShoeStore.WinForms/ShoeStore.WinForms.csproj"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "dependsOn": "Start PostgreSQL",
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Check queries",
+      "type": "process",
+      "command": "powershell.exe",
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/Database/Check-Database.ps1"],
+      "dependsOn": "Start PostgreSQL",
+      "problemMatcher": []
+    }
+  ]
+}

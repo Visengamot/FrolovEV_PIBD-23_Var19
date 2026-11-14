@@ -10,6 +10,7 @@ public sealed partial class MovementEditorForm : Form
 {
     private readonly IStockMovementRepository _movements = null!;
     private readonly Dictionary<Guid, decimal> _prices = null!;
+
     public MovementEditorForm()
     {
         InitializeComponent();
@@ -68,10 +69,7 @@ public sealed partial class MovementEditorForm : Form
             if (e.RowIndex >= 0
                 && e.ColumnIndex == 0
                 && _lines.Rows[e.RowIndex].Cells[0].Value is Guid id
-                && _prices.TryGetValue(
-                id,
-                out var price
-            ))
+                && _prices.TryGetValue(id, out var price))
                 _lines.Rows[e.RowIndex].Cells["UnitPriceColumn"].Value = price;
             UpdateTotal();
         };
@@ -98,10 +96,7 @@ public sealed partial class MovementEditorForm : Form
                 Convert.ToString(row.Cells["QuantityColumn"].Value),
                 out var quantity
             )
-                && decimal.TryParse(
-                Convert.ToString(row.Cells["UnitPriceColumn"].Value),
-                out var price
-            ))
+                && decimal.TryParse(Convert.ToString(row.Cells["UnitPriceColumn"].Value), out var price))
                 total += quantity * price;
         _total.Text = $"Итого: {total:N2} ₽";
     }
@@ -130,10 +125,7 @@ public sealed partial class MovementEditorForm : Form
                 out var price
             )
                 || price <= 0
-                || decimal.Round(
-                price,
-                2
-            ) != price)
+                || decimal.Round(price, 2) != price)
                 throw new ArgumentException(
                     prefix + "цена должна быть положительной, не более двух знаков после запятой."
                 );

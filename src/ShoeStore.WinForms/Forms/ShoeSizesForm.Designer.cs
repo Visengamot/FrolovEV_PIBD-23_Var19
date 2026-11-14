@@ -4,6 +4,7 @@ namespace ShoeStore.WinForms.Forms;
 partial class ShoeSizesForm
 {
     private System.ComponentModel.IContainer components = null;
+
     protected override void Dispose(bool disposing)
     {
         if (disposing && components != null)

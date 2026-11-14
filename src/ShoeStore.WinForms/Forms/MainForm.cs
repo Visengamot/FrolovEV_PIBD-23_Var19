@@ -5,6 +5,7 @@ namespace ShoeStore.WinForms.Forms;
 public partial class MainForm : Form
 {
     private readonly ILifetimeScope? _scope;
+
     public MainForm()
     {
         InitializeComponent();

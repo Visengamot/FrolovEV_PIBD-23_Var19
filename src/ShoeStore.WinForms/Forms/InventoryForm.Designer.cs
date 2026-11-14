@@ -16,6 +16,7 @@ partial class InventoryForm
     private DataGridViewTextBoxColumn BalanceColumn = null!;
     private DataGridViewTextBoxColumn CurrentMonthSoldColumn = null!;
     private DataGridViewTextBoxColumn CurrentMonthRevenueColumn = null!;
+
     protected override void Dispose(bool disposing)
     {
         if (disposing)

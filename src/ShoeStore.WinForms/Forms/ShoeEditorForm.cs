@@ -10,6 +10,7 @@ public partial class ShoeEditorForm : Form
     private readonly Guid _id;
     private readonly bool _editing;
     private static readonly Season[] SeasonValues = [Season.Spring, Season.Summer, Season.Autumn, Season.Winter];
+
     public ShoeEditorForm()
     {
         InitializeComponent();

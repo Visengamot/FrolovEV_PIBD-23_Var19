@@ -5,6 +5,7 @@ namespace ShoeStore.WinForms.Forms;
 public partial class ShoeSizesForm : Form
 {
     private readonly IShoeSizeRepository _repository = null!;
+
     public ShoeSizesForm()
     {
         InitializeComponent();
@@ -18,8 +19,10 @@ public partial class ShoeSizesForm : Form
 
     private void Reload() =>
         ItemsGrid.DataSource = _repository.GetAll().OrderBy(x => x.Value).ToList();
+
     private void AddItem() =>
         EditWith(new ShoeSizeEditorForm(_repository));
+
     private void EditItem() =>
         EditWith(
         new ShoeSizeEditorForm(
@@ -28,6 +31,7 @@ public partial class ShoeSizesForm : Form
         ?? throw new InvalidOperationException("Запись не найдена.")
     )
     );
+
     private void DeleteItem(Guid id) =>
         _repository.Delete(id);
     // Only dependency-injected instances subscribe to runtime data operations.
@@ -43,14 +47,19 @@ public partial class ShoeSizesForm : Form
 
     private void CatalogShown(object? sender, EventArgs e) =>
         Ui.Run(this, Reload);
+
     private void AddButtonClick(object? sender, EventArgs e) =>
         Ui.Run(this, AddItem);
+
     private void EditButtonClick(object? sender, EventArgs e) =>
         Ui.Run(this, EditItem);
+
     private void DeleteButtonClick(object? sender, EventArgs e) =>
         Ui.Run(this, DeleteSelected);
+
     private void RefreshButtonClick(object? sender, EventArgs e) =>
         Ui.Run(this, Reload);
+
     private void ItemsGridCellDoubleClick(object? sender, DataGridViewCellEventArgs e)
     {
         if (e.RowIndex >= 0)

@@ -15,6 +15,7 @@ internal static class Ui
         MessageBoxButtons.OK,
         MessageBoxIcon.Warning
     );
+
     public static void Run(IWin32Window owner, Action action)
     {
         try
@@ -43,6 +44,7 @@ internal static class Ui
             AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill,
             BorderStyle = BorderStyle.FixedSingle
         };
+
     public static void Column(DataGridView grid, string property, string title, string? format = null)
     {
         var column = new DataGridViewTextBoxColumn
@@ -91,6 +93,7 @@ internal static class Ui
             FootwearCategory.Slippers => "Тапочки",
             _ => category.ToString()
         };
+
     public static string Seasons(Season seasons)
     {
         if (seasons == Season.All)

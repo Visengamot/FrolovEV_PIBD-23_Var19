@@ -20,6 +20,9 @@ Materials/
 ui-smoke-test.txt
 ui-inventory.png
 
+# Local PostgreSQL credentials (generated, never commit)
+appsettings.Local.json
+
 # User-specific files
 *.rsuser
 *.suo

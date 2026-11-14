@@ -8,6 +8,7 @@ public partial class ManufacturerEditorForm : Form
     private readonly IManufacturerRepository? _repository;
     private readonly Guid _id;
     private readonly bool _editing;
+
     public ManufacturerEditorForm()
     {
         InitializeComponent();

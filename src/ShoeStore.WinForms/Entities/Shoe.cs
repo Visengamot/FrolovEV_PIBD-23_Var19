@@ -1,19 +1,31 @@
-﻿using ShoeStore.WinForms.Entities.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using ShoeStore.WinForms.Entities.Enums;
 using ShoeStore.WinForms.Entities;
 
 namespace ShoeStore.WinForms.Entities;
 
 public sealed class Shoe
 {
+    [Key]
     public Guid Id { get; private set; }
+
+    [Required, MaxLength(100)]
     public string Article { get; private set; } = string.Empty;
+
+    [Required, MaxLength(200)]
     public string Name { get; private set; } = string.Empty;
     public Guid ManufacturerId { get; private set; }
+
+    [Column(TypeName = "numeric(18,2)")]
     public decimal Price { get; private set; }
+
+    [ForeignKey(nameof(ManufacturerId))]
+    public Manufacturer Manufacturer { get; private set; } = null!;
     public FootwearCategory Category { get; private set; }
     public Season Seasons { get; private set; }
 
-    private Shoe()
+    public Shoe()
     {
     }
 

@@ -10,6 +10,7 @@ public sealed class StockReportService
     private readonly IShoeRepository _shoes;
     private readonly IShoeSizeRepository _sizes;
     private readonly IStockMovementRepository _movements;
+
     public StockReportService(
         IManufacturerRepository manufacturers,
         IShoeRepository shoes,
@@ -31,9 +32,7 @@ public sealed class StockReportService
         var sizes = _sizes.GetAll().ToDictionary(x => x.Id);
         var manufacturers = _manufacturers.GetAll().ToDictionary(x => x.Id);
         var entries = _movements.GetAll()
-            .Where(
-            x => x.Date <= date
-        )
+            .Where(x => x.Date <= date)
             .SelectMany(
             m => m.Items.Select(item => new
             {

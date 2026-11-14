@@ -7,6 +7,7 @@ public sealed partial class MovementsForm : Form
     private readonly IStockMovementRepository _movements = null!;
     private readonly IShoeRepository _shoes = null!;
     private readonly IShoeSizeRepository _sizes = null!;
+
     public MovementsForm()
     {
         InitializeComponent();
@@ -30,10 +31,13 @@ public sealed partial class MovementsForm : Form
         if (editor.ShowDialog(this) == DialogResult.OK)
             Reload();
     });
+
     private void RefreshMovements(object? sender, EventArgs e) =>
         Ui.Run(this, Reload);
+
     private void SelectionChanged(object? sender, EventArgs e) =>
         Ui.Run(this, LoadItems);
+
     private void FormShown(object? sender, EventArgs e)
     {
         movementSplitContainer.SplitterDistance = Math.Max(150, movementSplitContainer.Height / 2);
@@ -42,9 +46,7 @@ public sealed partial class MovementsForm : Form
 
     private void Reload() =>
         _operations.DataSource = _movements.GetAll()
-        .OrderByDescending(
-        x => x.Date
-    )
+        .OrderByDescending(x => x.Date)
         .Select(
         x => new
         {
@@ -57,6 +59,7 @@ public sealed partial class MovementsForm : Form
         }
     )
         .ToList();
+
     private void LoadItems()
     {
         if (_operations.CurrentRow?.Cells["IdColumn"].Value is not Guid id)
