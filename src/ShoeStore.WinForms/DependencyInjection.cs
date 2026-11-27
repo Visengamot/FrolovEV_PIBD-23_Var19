@@ -1,7 +1,8 @@
-﻿using Autofac;
+using Autofac;
 using Serilog;
 using ShoeStore.WinForms.Data;
 using ShoeStore.WinForms.Forms;
+using ShoeStore.WinForms.Reports;
 using ShoeStore.WinForms.Repositories;
 using ShoeStore.WinForms.Repositories.Implementations;
 
@@ -32,6 +33,12 @@ public static class DependencyInjection
         builder.RegisterType<ShoeSizesForm>();
         builder.RegisterType<MovementsForm>();
         builder.RegisterType<InventoryForm>();
+        builder.RegisterType<CatalogReport>();
+        builder.RegisterType<MovementReport>();
+        builder.RegisterType<SalesChartReport>();
+        builder.RegisterType<CatalogReportForm>();
+        builder.RegisterType<MovementReportForm>();
+        builder.RegisterType<SalesChartForm>();
         return builder;
     }
 }

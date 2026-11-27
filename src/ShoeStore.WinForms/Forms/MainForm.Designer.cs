@@ -1,4 +1,4 @@
-﻿#nullable disable
+#nullable disable
 namespace ShoeStore.WinForms.Forms
 {
     partial class MainForm
@@ -13,6 +13,9 @@ namespace ShoeStore.WinForms.Forms
         private ToolStripMenuItem movementsMenuItem;
         private ToolStripMenuItem inventoryMenuItem;
         private ToolStripMenuItem reportsMenuItem;
+        private ToolStripMenuItem catalogReportMenuItem;
+        private ToolStripMenuItem movementReportMenuItem;
+        private ToolStripMenuItem salesChartMenuItem;
         private StatusStrip mainStatusStrip;
         private ToolStripStatusLabel storageStatusLabel;
 
@@ -34,6 +37,9 @@ namespace ShoeStore.WinForms.Forms
             movementsMenuItem = new ToolStripMenuItem();
             inventoryMenuItem = new ToolStripMenuItem();
             reportsMenuItem = new ToolStripMenuItem();
+            catalogReportMenuItem = new ToolStripMenuItem();
+            movementReportMenuItem = new ToolStripMenuItem();
+            salesChartMenuItem = new ToolStripMenuItem();
             mainStatusStrip = new StatusStrip();
             storageStatusLabel = new ToolStripStatusLabel();
             mainMenuStrip.SuspendLayout();
@@ -76,6 +82,18 @@ namespace ShoeStore.WinForms.Forms
             inventoryMenuItem.Text = "Наличие товара";
             reportsMenuItem.Name = "reportsMenuItem";
             reportsMenuItem.Text = "Отчеты";
+            reportsMenuItem.DropDownItems.AddRange(new ToolStripItem[]
+            {
+                catalogReportMenuItem,
+                movementReportMenuItem,
+                salesChartMenuItem
+            });
+            catalogReportMenuItem.Name = "catalogReportMenuItem";
+            catalogReportMenuItem.Text = "Справочники в Word";
+            movementReportMenuItem.Name = "movementReportMenuItem";
+            movementReportMenuItem.Text = "Поступления и продажи в Excel";
+            salesChartMenuItem.Name = "salesChartMenuItem";
+            salesChartMenuItem.Text = "Диаграмма продаж в PDF";
             mainStatusStrip.Name = "mainStatusStrip";
             mainStatusStrip.Items.AddRange(new ToolStripItem[]
             {
