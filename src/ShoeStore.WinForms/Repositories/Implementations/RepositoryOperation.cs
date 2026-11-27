@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using ShoeStore.WinForms.Data;
 
@@ -37,8 +37,7 @@ internal static class RepositoryOperation
         try
         {
             using var transaction = context.Database.BeginTransaction(System.Data.IsolationLevel.Serializable);
-            // Every application writer uses the same transaction-scoped ledger lock.
-            // PostgreSQL releases it on commit/rollback; serialization conflicts ask the user to retry.
+
             context.Database.ExecuteSqlRaw("SELECT pg_advisory_xact_lock(1919002)");
             action();
             transaction.Commit();
