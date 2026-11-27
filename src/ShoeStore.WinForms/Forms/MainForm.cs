@@ -1,4 +1,4 @@
-﻿using Autofac;
+using Autofac;
 
 namespace ShoeStore.WinForms.Forms;
 
@@ -19,6 +19,9 @@ public partial class MainForm : Form
         sizesMenuItem.Click += (_, _) => OpenForm<ShoeSizesForm>();
         movementsMenuItem.Click += (_, _) => OpenForm<MovementsForm>();
         inventoryMenuItem.Click += (_, _) => OpenForm<InventoryForm>();
+        catalogReportMenuItem.Click += (_, _) => OpenForm<CatalogReportForm>();
+        movementReportMenuItem.Click += (_, _) => OpenForm<MovementReportForm>();
+        salesChartMenuItem.Click += (_, _) => OpenForm<SalesChartForm>();
     }
 
     private void OpenForm<T>()

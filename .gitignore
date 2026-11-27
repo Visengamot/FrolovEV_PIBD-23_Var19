@@ -20,6 +20,11 @@ Materials/
 ui-smoke-test.txt
 ui-inventory.png
 
+# Generated reports
+*.docx
+*.xlsx
+*.pdf
+
 # Local PostgreSQL credentials (generated, never commit)
 appsettings.Local.json
 
