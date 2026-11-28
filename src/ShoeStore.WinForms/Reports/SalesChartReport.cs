@@ -11,16 +11,22 @@ public sealed class SalesChartReport(
     IShoeRepository shoes,
     ILogger logger)
 {
-    public void Save(string path, DateTime date)
+    public void Save(string path, DateTime date) => Save(path, date, date);
+
+    public void Save(string path, DateTime from, DateTime to)
     {
-        date = date.Date;
-        logger.Information("Отчёт PDF: дата продаж {Date:dd.MM.yyyy}", date);
+        from = from.Date;
+        to = to.Date;
+        logger.Information("Отчёт PDF: период с {From:dd.MM.yyyy} по {To:dd.MM.yyyy}", from, to);
 
         try
         {
+            if (from > to)
+                throw new ArgumentException("Начало периода не может быть позже конца.");
+
             var categories = shoes.GetAll().ToDictionary(x => x.Id, x => x.Category);
             var sales = movements.GetAll()
-                .Where(x => x.Date.Date == date && x.Type == MovementType.Sale)
+                .Where(x => x.Type == MovementType.Sale && x.Date.Date >= from && x.Date.Date <= to)
                 .SelectMany(x => x.Items)
                 .GroupBy(x => categories[x.ShoeId])
                 .Select(group => (Category: Ui.Category(group.Key), Quantity: group.Sum(x => (long)x.Quantity)))
@@ -30,10 +36,14 @@ public sealed class SalesChartReport(
 
             var document = new PdfBuilder();
             document.AddHeading("Продажи обуви по категориям");
-            document.AddText($"Дата продаж: {date:dd.MM.yyyy}");
+            document.AddText(from == to
+                ? $"Дата продаж: {from:dd.MM.yyyy}"
+                : $"Период продаж: {from:dd.MM.yyyy} — {to:dd.MM.yyyy} (включительно)");
             if (sales.Count == 0)
             {
-                document.AddText("За выбранную дату продаж нет. Диаграмма не строится.");
+                document.AddText(from == to
+                    ? "За выбранную дату продаж нет. Диаграмма не строится."
+                    : "За выбранный период продаж нет. Диаграмма не строится.");
             }
             else
             {

@@ -38,6 +38,7 @@ public partial class MovementReportForm : Form
                 Filter = "Книга Excel (*.xlsx)|*.xlsx",
                 DefaultExt = "xlsx",
                 AddExtension = true,
+                InitialDirectory = Ui.ReportDirectory(),
                 FileName = "Движение товаров.xlsx",
                 OverwritePrompt = true,
                 RestoreDirectory = true

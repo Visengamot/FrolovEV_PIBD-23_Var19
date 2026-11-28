@@ -1,4 +1,4 @@
-﻿using ShoeStore.WinForms.Entities.Enums;
+using ShoeStore.WinForms.Entities.Enums;
 
 namespace ShoeStore.WinForms.Forms;
 
@@ -25,6 +25,30 @@ internal static class Ui
         catch (Exception exception)
         {
             Error(owner, exception);
+        }
+    }
+
+    public static string ReportDirectory()
+    {
+        var documents = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+        if (string.IsNullOrEmpty(documents))
+            documents = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+
+        var folder = Path.Combine(documents, "Отчёты магазина обуви");
+        if (Directory.Exists(folder))
+            return folder;
+
+        try
+        {
+            return Directory.CreateDirectory(folder).FullName;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return documents;
+        }
+        catch (IOException)
+        {
+            return documents;
         }
     }
 

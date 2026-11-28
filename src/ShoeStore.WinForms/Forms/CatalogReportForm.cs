@@ -36,6 +36,7 @@ public partial class CatalogReportForm : Form
                 Filter = "Документ Word (*.docx)|*.docx",
                 DefaultExt = "docx",
                 AddExtension = true,
+                InitialDirectory = Ui.ReportDirectory(),
                 FileName = "Справочники.docx",
                 OverwritePrompt = true,
                 RestoreDirectory = true
