@@ -8,6 +8,7 @@ partial class ShoeSizeEditorForm
     private NumericUpDown sizeNumericUpDown = null!;
     private Button saveButton = null!;
     private Button cancelButton = null!;
+
     protected override void Dispose(bool disposing)
     {
         if (disposing && components != null)

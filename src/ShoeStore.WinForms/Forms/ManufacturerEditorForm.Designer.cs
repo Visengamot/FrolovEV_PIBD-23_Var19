@@ -10,6 +10,7 @@ partial class ManufacturerEditorForm
     private TextBox countryTextBox = null!;
     private Button saveButton = null!;
     private Button cancelButton = null!;
+
     protected override void Dispose(bool disposing)
     {
         if (disposing && components != null)

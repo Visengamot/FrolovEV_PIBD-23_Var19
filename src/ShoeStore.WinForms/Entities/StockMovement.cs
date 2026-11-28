@@ -1,18 +1,28 @@
-﻿using ShoeStore.WinForms.Entities.Enums;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using ShoeStore.WinForms.Entities.Enums;
 using ShoeStore.WinForms.Entities;
 
 namespace ShoeStore.WinForms.Entities;
 
 public sealed class StockMovement
 {
+    [Key]
     public Guid Id { get; private set; }
+
+    [Column(TypeName = "date")]
     public DateTime Date { get; private set; }
     public MovementType Type { get; private set; }
-    public IReadOnlyList<MovementItem> Items { get; private set; } = Array.Empty<MovementItem>();
+
+    private List<MovementItem> _items = new();
+    public IReadOnlyList<MovementItem> Items =>
+        _items.AsReadOnly();
+
+    [NotMapped]
     public decimal Total =>
         Items.Sum(x => x.Total);
 
-    private StockMovement()
+    public StockMovement()
     {
     }
 
@@ -32,14 +42,10 @@ public sealed class StockMovement
             throw new ArgumentException("Операция должна содержать позиции.", nameof(items));
         if (list.Any(x => x.MovementId != id))
             throw new ArgumentException("Позиция относится к другой операции.", nameof(items));
-        if (list.Select(
-            x => x.Id
-        )
+        if (list.Select(x => x.Id)
             .Distinct()
             .Count() != list.Count
-            || list.Select(
-            x => (x.ShoeId, x.ShoeSizeId)
-        )
+            || list.Select(x => (x.ShoeId, x.ShoeSizeId))
             .Distinct()
             .Count() != list.Count)
             throw new ArgumentException("Повторяющиеся позиции операции.", nameof(items));
@@ -48,7 +54,7 @@ public sealed class StockMovement
             Id = id,
             Date = date.Date,
             Type = type,
-            Items = list.AsReadOnly()
+            _items = list
         };
     }
 }

@@ -24,6 +24,7 @@ partial class MovementsForm
     private DataGridViewTextBoxColumn itemQuantityColumn = null!;
     private DataGridViewTextBoxColumn itemUnitPriceColumn = null!;
     private DataGridViewTextBoxColumn itemTotalColumn = null!;
+
     protected override void Dispose(bool disposing)
     {
         if (disposing)

@@ -15,6 +15,7 @@ namespace ShoeStore.WinForms.Forms
         private ToolStripMenuItem reportsMenuItem;
         private StatusStrip mainStatusStrip;
         private ToolStripStatusLabel storageStatusLabel;
+
         protected override void Dispose(bool disposing)
         {
             if (disposing && components != null)
@@ -83,7 +84,7 @@ namespace ShoeStore.WinForms.Forms
             storageStatusLabel.Name = "storageStatusLabel";
             storageStatusLabel.Spring = true;
             storageStatusLabel.TextAlign = ContentAlignment.MiddleLeft;
-            storageStatusLabel.Text = "Учёт обуви • Данные хранятся в памяти до закрытия программы";
+            storageStatusLabel.Text = "Учёт обуви • PostgreSQL — данные сохраняются в базе";
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1184, 721);
             Controls.Add(mainMenuStrip);

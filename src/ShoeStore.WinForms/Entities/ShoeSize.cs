@@ -1,13 +1,18 @@
-﻿using ShoeStore.WinForms.Entities;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using ShoeStore.WinForms.Entities;
 
 namespace ShoeStore.WinForms.Entities;
 
 public sealed class ShoeSize
 {
+    [Key]
     public Guid Id { get; private set; }
+
+    [Column(TypeName = "numeric(4,1)")]
     public decimal Value { get; private set; }
 
-    private ShoeSize()
+    public ShoeSize()
     {
     }
 

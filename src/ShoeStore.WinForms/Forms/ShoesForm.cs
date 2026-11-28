@@ -6,6 +6,7 @@ public partial class ShoesForm : Form
 {
     private readonly IShoeRepository _repository = null!;
     private readonly IManufacturerRepository _manufacturers = null!;
+
     public ShoesForm()
     {
         InitializeComponent();
@@ -39,6 +40,7 @@ public partial class ShoesForm : Form
 
     private void AddItem() =>
         EditWith(new ShoeEditorForm(_repository, _manufacturers));
+
     private void EditItem() =>
         EditWith(
         new ShoeEditorForm(
@@ -48,6 +50,7 @@ public partial class ShoesForm : Form
         ?? throw new InvalidOperationException("Запись не найдена.")
     )
     );
+
     private void DeleteItem(Guid id) =>
         _repository.Delete(id);
     // Only dependency-injected instances subscribe to runtime data operations.
@@ -63,14 +66,19 @@ public partial class ShoesForm : Form
 
     private void CatalogShown(object? sender, EventArgs e) =>
         Ui.Run(this, Reload);
+
     private void AddButtonClick(object? sender, EventArgs e) =>
         Ui.Run(this, AddItem);
+
     private void EditButtonClick(object? sender, EventArgs e) =>
         Ui.Run(this, EditItem);
+
     private void DeleteButtonClick(object? sender, EventArgs e) =>
         Ui.Run(this, DeleteSelected);
+
     private void RefreshButtonClick(object? sender, EventArgs e) =>
         Ui.Run(this, Reload);
+
     private void ItemsGridCellDoubleClick(object? sender, DataGridViewCellEventArgs e)
     {
         if (e.RowIndex >= 0)

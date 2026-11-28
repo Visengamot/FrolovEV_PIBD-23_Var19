@@ -20,6 +20,7 @@ partial class MovementEditorForm
     private DataGridViewComboBoxColumn SizeColumn = null!;
     private DataGridViewTextBoxColumn QuantityColumn = null!;
     private DataGridViewTextBoxColumn UnitPriceColumn = null!;
+
     protected override void Dispose(bool disposing)
     {
         if (disposing)
